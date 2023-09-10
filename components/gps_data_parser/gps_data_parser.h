@@ -10,7 +10,7 @@ typedef struct{
     uint8_t   hours;                                   // Time in HH
     uint8_t   minutes;                                 // Time in MM
     float seconds;                                 // Time in SS.SSS
-}time_t;
+}frame_time_t;
 
 typedef struct{
     float latitude;                                // Latitude in decimal degrees (DDMM.MMMM)
@@ -38,14 +38,14 @@ typedef struct{
 }Differential_GPS_Data_t;
 
 typedef struct {
-    time_t time_frame;                             // Time in hour minutes seconds (HHMMSS.SSS) format
+    frame_time_t time;                             // Time in hour minutes seconds (HHMMSS.SSS) format
     position_latitude_t  latitude;                 // Latitude in decimal degrees (DDMM.MMMM) along with indicator (North or South)
     position_longitude_t longitude;                // Longitude in decimal degrees (DDMM.MMMM) along with indicator (Easth or West)
     uint8_t fix_quality_indicator;                 // 0 = Invalid, 1 = GPS_Fix, 2 = DGPS_Fix, 3 = not_applicable
     uint8_t satellites;                            // Number of satellites used to calculate positions
     float horizontal_dilution_precision;           // The current satellite geometry's effect on position accuracy.
     altitude_data_t altitude;                      // Altitude above sealevel along with its unit 
-    geoidal_data_t geoidal_height                  // The difference between ellipsoid and sea level along with its unit
+    geoidal_data_t geoidal_height;                  // The difference between ellipsoid and sea level along with its unit
     Differential_GPS_Data_t differential_info;     // Provides the time since last DGPS update and the reference station id
 }GGA_Data_t;
 
