@@ -7,7 +7,7 @@ extern "C" {
 
 #include <stdbool.h>
 
-#define MAX_SENTENCE_LENGTH 80   // Maximum length of a nmea sentence to store it in an array of characters excluding terminating sequence
+#define MAX_SENTENCE_LENGTH 90   // Maximum length of a nmea sentence to store it in an array of characters excluding terminating sequence
 
 typedef enum
 {
