@@ -123,9 +123,9 @@ bool parse_GGA_sentence(const char *gps_sentence, GGA_Data_t *Received_data)
         switch (field_parsed){
             case GGA_FRAME_TIME:
                 if (!((field_end - field_start) >= 6)){
-                    Received_data->time.hours = 00;
-                    Received_data->time.minutes = 00;
-                    Received_data->time.seconds = 00.000;
+                    Received_data->time.hours = DEFAULT_GGA_FRAME_TIME;
+                    Received_data->time.minutes = DEFAULT_GGA_FRAME_TIME;
+                    Received_data->time.seconds = DEFAULT_GGA_FRAME_TIME;
                 }else{
                     if ((sscanf(field_start, "%2hhd%2hhd%f", &Received_data->time.hours, &Received_data->time.minutes, &Received_data->time.seconds)) != 3){
                         return false;
@@ -137,7 +137,7 @@ bool parse_GGA_sentence(const char *gps_sentence, GGA_Data_t *Received_data)
 
             case GGA_LATITUDE_VALUE:
                 if (!((field_end - field_start) >= 4)){
-                    Received_data->latitude.latitude_val = 0000.0000;
+                    Received_data->latitude.latitude_val = DEFAULT_GGA_LATITUDE_VALUE;
                 }else{
                 // Extract degrees and minutes
                     if (sscanf(field_start, "%2d%f", &degrees_lat_lon, &Received_data->latitude.latitude_val) != 2) {
@@ -151,7 +151,7 @@ bool parse_GGA_sentence(const char *gps_sentence, GGA_Data_t *Received_data)
 
             case GGA_LATITUDE_INDICATOR: 
                 if ((*field_start != 'N') && (*field_start != 'S')){
-                    Received_data->latitude.indicator_lat = 0;
+                    Received_data->latitude.indicator_lat = DEFAULT_GGA_LATITUDE_INDICATOR;
                 }else if (*field_start == 'S'){
                     Received_data->latitude.indicator_lat = *field_start;
                 }else if (*field_start == 'N'){
@@ -163,7 +163,7 @@ bool parse_GGA_sentence(const char *gps_sentence, GGA_Data_t *Received_data)
 
             case GGA_LONGITUDE_VALUE: 
                 if (!((field_end - field_start) >= 5)){
-                    Received_data->longitude.longitude_val = 00000.0000;
+                    Received_data->longitude.longitude_val = DEFAULT_GGA_LONGITUDE_VALUE;
                 }else{
                 // Extract degrees and minutes
                     if (sscanf(field_start, "%3d%f", &degrees_lat_lon, &Received_data->longitude.longitude_val) != 2){
@@ -177,7 +177,7 @@ bool parse_GGA_sentence(const char *gps_sentence, GGA_Data_t *Received_data)
 
             case GGA_LONGITUDE_INDICATOR:
                 if (*field_start != 'E' && *field_start != 'W'){
-                    Received_data->longitude.indicator_lon = 0;
+                    Received_data->longitude.indicator_lon = DEFAULT_GGA_LONGITUDE_INDICATOR;
                 }else if (*field_start == 'W'){
                     Received_data->longitude.indicator_lon = *field_start;
                 }else if (*field_start == 'E'){
@@ -189,7 +189,7 @@ bool parse_GGA_sentence(const char *gps_sentence, GGA_Data_t *Received_data)
 
             case GGA_FIX_QUALITY:
                 if ((field_end - field_start) != 1 ){
-                    Received_data->fix_quality_indicator = 10;
+                    Received_data->fix_quality_indicator = DEFAULT_GGA_FIX_QUALITY;
                 }else{
                     if (sscanf(field_start, "%hhd", &Received_data->fix_quality_indicator) != 1){
                         return false;
@@ -201,7 +201,7 @@ bool parse_GGA_sentence(const char *gps_sentence, GGA_Data_t *Received_data)
 
             case GGA_USED_SATELLITES:
                 if (!((field_end - field_start) <= 2 )){
-                    Received_data->satellites = 15;
+                    Received_data->satellites = DEFAULT_GGA_USED_SATELLITES;
                 }else{
                     if (sscanf(field_start, "%hhd", &Received_data->satellites) != 1){
                         return false;
@@ -213,7 +213,7 @@ bool parse_GGA_sentence(const char *gps_sentence, GGA_Data_t *Received_data)
 
             case GGA_HDOP:
                 if (!((field_end - field_start) >= 3)){
-                    Received_data->horizontal_dilution_precision = 0.0;
+                    Received_data->horizontal_dilution_precision = DEFAULT_GGA_HDOP;
                 }else{
                     if (sscanf(field_start, "%f", &Received_data->horizontal_dilution_precision) != 1){
                         return false;
@@ -225,7 +225,7 @@ bool parse_GGA_sentence(const char *gps_sentence, GGA_Data_t *Received_data)
 
             case GGA_ALTITUDE:
                 if (!((field_end - field_start) >= 3)){
-                    Received_data->altitude.altitude_val = 0.0;
+                    Received_data->altitude.altitude_val = DEFAULT_GGA_ALTITUDE;
                 }else{
                     if (sscanf(field_start, "%f", &Received_data->altitude.altitude_val) != 1){
                         return false;
@@ -237,7 +237,7 @@ bool parse_GGA_sentence(const char *gps_sentence, GGA_Data_t *Received_data)
 
             case GGA_ALTITUDE_UNIT:
                 if (*field_start != 'M'){
-                    Received_data->altitude.unit_altitude = 0;
+                    Received_data->altitude.unit_altitude = DEFAULT_GGA_ALTITUDE_UNIT;
                 }else if (*field_start == 'M'){
                     Received_data->altitude.unit_altitude = *field_start;
                 }else{
@@ -247,7 +247,7 @@ bool parse_GGA_sentence(const char *gps_sentence, GGA_Data_t *Received_data)
 
             case GGA_GEOID:
                 if (!((field_end - field_start) >= 3)){
-                    Received_data->geoidal_height.height_geoidal_separation = 0.0;
+                    Received_data->geoidal_height.height_geoidal_separation = DEFAULT_GGA_GEOID;
                 }else{
                     if (sscanf(field_start, "%f", &Received_data->geoidal_height.height_geoidal_separation) != 1){ 
                         return false;
@@ -259,7 +259,7 @@ bool parse_GGA_sentence(const char *gps_sentence, GGA_Data_t *Received_data)
 
             case GGA_GEOID_UNIT:
                 if (*field_start != 'M'){
-                    Received_data->geoidal_height.unit_geoidal_height = 0;
+                    Received_data->geoidal_height.unit_geoidal_height = DEFAULT_GGA_GEOID_UNIT;
                 }else if (*field_start == 'M'){
                     Received_data->geoidal_height.unit_geoidal_height = *field_start;
                 }else{
@@ -269,7 +269,7 @@ bool parse_GGA_sentence(const char *gps_sentence, GGA_Data_t *Received_data)
 
             case GGA_TIME_DGPS:
                 if (!((field_end - field_start) >= 1)){
-                    Received_data->differential_info.time_since_last_dgps = 0.0;
+                    Received_data->differential_info.time_since_last_dgps = DEFAULT_GGA_TIME_DGPS;
                 }else{
                     if (sscanf(field_start, "%f", &Received_data->differential_info.time_since_last_dgps) != 1){ 
                         return false;
@@ -281,10 +281,10 @@ bool parse_GGA_sentence(const char *gps_sentence, GGA_Data_t *Received_data)
 
             case GGA_ID_STATION:
                 if (!((field_end - field_start) >= 3)){
-                    Received_data->differential_info.dgps_station_id = 9999;
+                    Received_data->differential_info.dgps_station_id = DEFAULT_GGA_ID_STATION;
                 }else{
                     if (sscanf(field_start, "%hd", &Received_data->differential_info.dgps_station_id) != 1){
-                        Received_data->differential_info.dgps_station_id = 9999;
+                        Received_data->differential_info.dgps_station_id = DEFAULT_GGA_ID_STATION;
                     }else{
                         // do nothing
                     }
