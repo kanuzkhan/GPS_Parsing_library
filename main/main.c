@@ -7,7 +7,7 @@ void app_main(void)
     char sentence_gps_gga [MAX_SENTENCE_LENGTH]= "$GPGGA,,,,,,0,00,99.99,,,,,,*48";
     GGA_Data_t data;
     printf("%s\n",sentence_gps_gga );
-    if (parse_GGA_sentence(sentence_gps_gga, &data)){
+    if (Parse_gps_data(sentence_gps_gga, &data)){
         printf("Successful!!\n"
         "%d Hours %d Minutes %f Seconds\n"
         "Latitude value: %f Latitude Indicator: %c\n" 

@@ -95,6 +95,7 @@ typedef struct {
 bool check_sentence_validity_and_integrity(const char* gps_sentence);
 bool sentence_type_GGA(const char *gps_sentence);
 bool parse_GGA_sentence(const char *gps_sentence, GGA_Data_t *Received_data);
+bool Parse_gps_data(const char *gps_sentence, GGA_Data_t *Received_data);
 
 #ifdef __cplusplus
 }
