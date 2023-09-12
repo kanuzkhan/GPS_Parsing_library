@@ -29,6 +29,25 @@ typedef enum
     GGA_ERROR
 }sentence_gga_parameters_t;
 
+typedef enum
+{
+    DEFAULT_GGA_FRAME_TIME = 0,
+    DEFAULT_GGA_LATITUDE_VALUE = 0,
+    DEFAULT_GGA_LATITUDE_INDICATOR = 0,
+    DEFAULT_GGA_LONGITUDE_VALUE = 0,
+    DEFAULT_GGA_LONGITUDE_INDICATOR = 0,
+    DEFAULT_GGA_FIX_QUALITY = 10,
+    DEFAULT_GGA_USED_SATELLITES = 100,
+    DEFAULT_GGA_HDOP = 0,
+    DEFAULT_GGA_ALTITUDE = 0,
+    DEFAULT_GGA_ALTITUDE_UNIT= 0,
+    DEFAULT_GGA_GEOID = 0,
+    DEFAULT_GGA_GEOID_UNIT = 0,
+    DEFAULT_GGA_TIME_DGPS = 0,
+    DEFAULT_GGA_ID_STATION = 9999
+}default_missing_field_values_GGA_t;
+
+
 typedef struct{
     int8_t   hours;                               // Time in HH
     int8_t   minutes;                             // Time in MM
