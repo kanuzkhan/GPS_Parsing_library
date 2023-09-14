@@ -1,9 +1,23 @@
+/*
+ * File: gps_data_parser.c
+ * Description: Implementation of functions for the GPS parsing library.
+ * Author: Kanuz Khan
+ * Date: September 13, 2023
+ */
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 #include "gps_data_parser.h"
 
-
+/*----------------------------------------------------------------------------*/
+/**	
+*  Parses GGA sentence and extracts parameters such as time, latitude etc. from it.
+* \internal
+*  This function takes a GGA sentence and a data structure, divided the sentence into fields and extracts required information from it.
+* \endinternal
+*
+*/
 bool parse_GGA_sentence(const char* gps_sentence, GGA_Data_t *Received_data)
 {
     // Parsing the GGA sentence
@@ -205,6 +219,14 @@ bool parse_GGA_sentence(const char* gps_sentence, GGA_Data_t *Received_data)
     return true;
 }
 
+/*----------------------------------------------------------------------------*/
+/**	
+*  Returns numeric value for a hex input.
+* \internal
+*  This function takes hexadecimal input and return the decimal equivalent value for it.
+* \endinternal
+*
+*/
 static int char_to_int(char k) 
 {
     if (k >= '0' && k <= '9') {
@@ -218,6 +240,14 @@ static int char_to_int(char k)
     }
 }
 
+/*----------------------------------------------------------------------------*/
+/**	
+*  Checks validity and integrity of the input sentence   
+* \internal
+*  This function checks whether the input sentence is valid, calculates checksum, extracts checksum and compares it to verify the integrity.
+* \endinternal
+*
+*/
 bool check_sentence_validity_and_integrity(const char* gps_sentence)
 {
     uint8_t checksum_calculated = 0x00;
@@ -278,6 +308,15 @@ bool check_sentence_validity_and_integrity(const char* gps_sentence)
 
     return true;
 }
+
+/*----------------------------------------------------------------------------*/
+/**	
+*  Checks whether the sentence is GGA type or not 
+* \internal
+*  This function checks whether a valid sentence is GGA type or not by comparing the sentence identifier 
+* \endinternal
+*
+*/
 bool sentence_type_GGA(const char *gps_sentence)
 {
     // Check if the sentence is a GGA sentence
@@ -288,6 +327,14 @@ bool sentence_type_GGA(const char *gps_sentence)
     } 
 }
 
+/*----------------------------------------------------------------------------*/
+/**	
+*  Parses GGA sentence, checks validity and extracts required data
+* \internal
+*  This function is a general function used to parses sentences, it checks validity, integrity and extracts the required information 
+* \endinternal
+*
+*/
 bool Parse_gps_data(const char *gps_sentence, GGA_Data_t *Received_data)
 {
     // Check for validity and integrity

@@ -1,3 +1,9 @@
+/*
+ * File: main.c
+ * Description: Example for gps_parsing_library to extract the required information.
+ * Author: Kanuz Khan
+ * Date: September 13, 2023
+ */
 
 #include <stdio.h>
 #include <ctype.h>
@@ -5,8 +11,11 @@
 void app_main(void)
 {
     char sentence_gps_gga [MAX_SENTENCE_LENGTH]= "$GPGGA,,,,,,0,00,99.99,,,,,,*48";
+
     GGA_Data_t data;
+
     printf("%s\n",sentence_gps_gga );
+    
     if (Parse_gps_data(sentence_gps_gga, &data)){
         printf("Successful!!\n"
         "%d Hours %d Minutes %f Seconds\n"
